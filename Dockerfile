@@ -1,4 +1,4 @@
-FROM dockerfile/java:oracle-java6
+FROM java:6b35-jdk
 
 # ENTRYPOINT ["gvm-exec.sh"]
 
