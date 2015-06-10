@@ -13,4 +13,4 @@ RUN curl -s get.gvmtool.net | bash
 ADD gvm.config /.gvm/etc/config
 ADD bin/ /usr/local/bin/
 
-RUN gvm install grails 2.2.3
+RUN source "//.gvm/bin/gvm-init.sh" && gvm install grails 2.2.3
