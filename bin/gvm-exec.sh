@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# A quick wrapper to source the gvm env and run a command
-# This is used to run gvm in Dockerfile RUN commands
-# since the RUN commands does not use interactive shells
+set -x
+env
 
-[[ -s "//.gvm/bin/gvm-init.sh" ]] && source "//.gvm/bin/gvm-init.sh" && exec "$@"
+which java
+
+exec $@

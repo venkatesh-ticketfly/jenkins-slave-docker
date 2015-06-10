@@ -1,16 +1,10 @@
-FROM java:6b35-jdk
+FROM java:openjdk-6
 
-# ENTRYPOINT ["gvm-exec.sh"]
+COPY bin/gvm-exec.sh /usr/local/bin/gvm-exec.sh
+ENTRYPOINT ["/usr/local/bin/gvm-exec.sh"]
 
-# gvm requires curl and unzip
-RUN apt-get update && \
-    apt-get install -yqq --no-install-recommends curl unzip && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# install gvm
-RUN curl -s get.gvmtool.net | bash
-ADD gvm.config /.gvm/etc/config
-ADD bin/ /usr/local/bin/
-
-RUN source "//.gvm/bin/gvm-init.sh" && gvm install grails 2.2.3
+# # gvm requires curl and unzip
+# RUN apt-get update && \
+#     apt-get install -yqq --no-install-recommends curl unzip && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
