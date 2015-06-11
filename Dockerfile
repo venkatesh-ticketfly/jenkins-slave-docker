@@ -1,14 +1,19 @@
-FROM java:openjdk-6
+FROM java:openjdk-7
 
-# USER vagrant
+RUN apt-get update \
+  && apt-get install -y openssh-server \
+  && apt-get install -y supervisor
 
-ENV JAVA_HOME /usr/lib/jvm/java-6-openjdk-amd64
+RUN echo "root:password" | chpasswd
+RUN useradd jenkins
+RUN echo "jenkins:jenkins" | chpasswd
 
-COPY gvm-exec.sh /usr/local/bin/gvm-exec.sh
-ENTRYPOINT ["/usr/local/bin/gvm-exec.sh"]
+RUN mkdir -p /var/run/sshd
+# RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+RUN sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
 
-# # gvm requires curl and unzip
-# RUN apt-get update && \
-#     apt-get install -yqq --no-install-recommends curl unzip && \
-#     apt-get clean && \
-#     rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /var/run/supervisord
+ADD supervisord.conf /etc/supervisord.conf
+
+EXPOSE 22
+CMD ["/usr/bin/supervisord"]
