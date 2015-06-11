@@ -1,6 +1,10 @@
 FROM java:openjdk-6
 
-COPY bin/gvm-exec.sh /usr/local/bin/gvm-exec.sh
+# USER vagrant
+
+ENV JAVA_HOME /usr/lib/jvm/java-6-openjdk-amd64
+
+COPY gvm-exec.sh /usr/local/bin/gvm-exec.sh
 ENTRYPOINT ["/usr/local/bin/gvm-exec.sh"]
 
 # # gvm requires curl and unzip
