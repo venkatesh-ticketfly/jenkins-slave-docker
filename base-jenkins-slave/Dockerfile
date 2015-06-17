@@ -11,6 +11,10 @@ RUN echo "jenkins:jenkins" | chpasswd
 RUN mkdir -p /home/jenkins
 RUN chmod 777 /home/jenkins
 
+RUN mkdir -p /home/jenkins/.grails
+RUN chmod 777 /home/jenkins/.grails
+RUN mount -t tmpfs -o size="1024m" tmpfs /home/jenkins/.grails
+
 RUN mkdir -p /var/run/sshd
 RUN sed -i 's|session    required     pam_loginuid.so|session    optional     pam_loginuid.so|g' /etc/pam.d/sshd
 RUN mkdir -p /var/run/supervisord
