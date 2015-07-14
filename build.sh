@@ -1,15 +1,17 @@
 #!/bin/bash
 
+VERSION=1.0
+
 cwd=`pwd`
 
-cd $cwd/base-jenkins-slave
+cd $cwd/jenkins-slave
 
-sudo docker build -t tfly-jenkins/base-jenkins-slave .
+sudo docker build -t venkatesh4ticketfly/jenkins-slave:$VERSION .
 
-cd $cwd/slave-tempfs
+docker tag venkatesh4ticketfly/jenkins-slave:$VERSION venkatesh4ticketfly/jenkins-slave:latest
 
-sudo docker build -t tfly-jenkins/slave-tempfs .
+cd $cwd/imagemagick-jenkins-slave
 
-cd $cwd/slave-imagemagick
+sudo docker build -t venkatesh4ticketfly/imagemagick-jenkins-slave:$VERSION .
 
-sudo docker build -t tfly-jenkins/slave-imagemagick .
+docker tag venkatesh4ticketfly/imagemagick-jenkins-slave:$VERSION venkatesh4ticketfly/imagemagick-jenkins-slave:latest
