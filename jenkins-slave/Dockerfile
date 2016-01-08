@@ -1,5 +1,7 @@
 FROM java:openjdk-7
 
+ENV JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/jre"
+
 RUN apt-get update \
   && apt-get install -y openssh-server \
   && apt-get install -y supervisor \
@@ -16,5 +18,14 @@ RUN mkdir -p /var/run/sshd \
 	&& mkdir -p /var/run/supervisord
 ADD supervisord.conf /etc/supervisord.conf
 
+ADD install-grails.sh /root
+
+WORKDIR /root
+RUN chmod +x install-grails.sh
+RUN ./install-grails.sh 2.3.11
+RUN ./install-grails.sh 2.4.4
+RUN ./install-grails.sh 2.2.3
+
+WORKDIR /
 EXPOSE 22
 CMD ["/usr/bin/supervisord"]
